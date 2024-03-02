@@ -23,7 +23,7 @@ def decrypt_content(data: bytes, header=tonyenc_header, key=tonyenc_key):
     p = 0
     for i in range(1, data_len, 2):
         p = (p + key[p] + i) % len(key)
-        data[i] = data[i] ^ key[p] ^ 0b1111_1111
+        data[i] = data[i] ^ key[p] ^ 0xff
 
     return data
 
@@ -31,7 +31,7 @@ def decrypt_content(data: bytes, header=tonyenc_header, key=tonyenc_key):
 def decrypt_file(input_path: str, output_path: str, header=tonyenc_header, key=tonyenc_key):
     import os
     import shutil
-    print(f'Processing file: {input_path}...', end='')
+    print('Processing file: {}...'.format(input_path), end='')
     input_content = None
     with open(input_path, 'rb') as f:
         input_content = f.read()
